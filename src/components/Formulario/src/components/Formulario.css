@@ -1,0 +1,12 @@
+.src-components-formulario {
+
+}
+h2 {
+    color: red;
+  }
+  
+.jumbotron {
+    padding: 32px !important;
+    color: white;
+    background-color: turquoise;
+}
