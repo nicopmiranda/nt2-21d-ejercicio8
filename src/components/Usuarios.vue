@@ -5,9 +5,8 @@
       <h2>Usuarios</h2>
       <hr>
 
-      <button class="btn btn-info my-3 mx-3" @click="getUsuariosCb()">Pedir Usuarios XMLHttpRequest</button>    
-      <button class="btn btn-warning my-3 mx-3" @click="getUsuariosFetch()">Pedir Usuarios FETCH</button>    
-      <button class="btn btn-danger my-3 mx-3" @click="getUsuariosAxios()">Pedir Usuarios AXIOS</button>
+      <button class="btn btn-danger my-3 mx-3" @click="getUsuariosAxiosAsyncAwait()">Pedir Usuarios AXIOS con Async Await</button>
+      <button class="btn btn-info my-3 mx-3" @click="getUsuariosAxiosThenCatch()">Pedir Usuarios AXIOS con Then Catch</button>
       <label class="mx-3" v-if="tipo.length">Usuarios pedidos con {{tipo}}</label>
 
       <div v-if="usuarios.length" class="table-responsive">
@@ -47,65 +46,30 @@
       }
     },
     methods: {
-
-      /* --------------------------------------------------------------- */
-      /*              AJAX: Asynchronous Javascript And XML              */
-      /* --------------------------------------------------------------- */
-      
-      /* ------ AJAX: XMLHttpRequest ------ */
-      getUsuariosCb() {
-        //Creo la instancia de comunicación asincrónica AJAX con XMLHttpRequest
-        let xhr = new XMLHttpRequest
-        //Configuro dicha instancia
-        xhr.open('get', this.url)
-        //Registro el evento de fin de la comunicación
-        xhr.addEventListener('load', () => {
-          //La comunicación finalizó en forma exitosa
-          if(xhr.status == 200) {
-            let respuesta = JSON.parse(xhr.response)
-            console.log('XMLHttpRequest',respuesta)
-            this.usuarios = respuesta
-          }
-          else {
-            console.error(`Error en GET -> status: ${xhr.status}`)
-          }
-        })
-        xhr.addEventListener('error', e => {
-            console.error(`Error XMLHttpRequest ->`, e)
-        })
-        //Envío la petición al servidor
-        xhr.send()
-        //Pongo el método pedido
-        this.tipo = "XMLHttpRequest";
-      },
-
-      /* ------ AJAX: FETCH ------ */
-      getUsuariosFetch() {
-          fetch(this.url)
-          .then(datos => datos.json())
-          .then(respuesta => {
-            console.log('FETCH', respuesta)
-            this.usuarios = respuesta
-          })
-          .catch(error => console.error(error))
-          
-          this.tipo = "Fetch";
-      },
-
       /* ------ AJAX: AXIOS ------ */
       //https://github.com/axios/axios
       //https://www.npmjs.com/package/axios
       //https://www.npmjs.com/package/vue-axios
       //npm i axios vue-axios
-      getUsuariosAxios() {
-          this.axios(this.url)
-          .then(respuesta => {
-            console.log('AXIOS', respuesta.data)
-            this.usuarios = respuesta.data
-          })
-          .catch(error => console.error(error))
+      getUsuariosAxiosThenCatch() {
+        this.axios(this.url)
+        .then(respuesta => {
+          console.log('Then, catch', respuesta.data)
+          this.usuarios = respuesta.data
+        })
+        .catch(error => console.error(error))
 
-          this.tipo = "Axios";
+        this.tipo = "then catch";
+      },
+      async getUsuariosAxiosAsyncAwait(){
+        try {
+          let res = await this.axios.get(this.url);
+          this.usuarios = res.data;
+          this.tipo = "async await";
+        } catch (error) {
+          console.log(error);
+          this.tipo = "async await, pero falló";
+        }
       }
 
     },
