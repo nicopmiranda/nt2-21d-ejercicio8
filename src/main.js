@@ -18,11 +18,17 @@ import './form';
 /* npm i axios vue-axios */
 import './httpClient';
 
+/* https://vuex.vuejs.org/#what-is-a-state-management-pattern */
+/* npm i vuex */
+import store from './store'
+
+import './globalMixins';
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');
 

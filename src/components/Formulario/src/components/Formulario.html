@@ -88,15 +88,15 @@
 
     </vue-form>
 
-    <div v-if="personas.length" class="table-responsive">
+    <div v-if="getUsersLength" class="table-responsive">
       <table class="table table-dark">
         <!-- Encabezado de la tabla -->
         <tr>
-          <th v-for="(keyName, index) in getKeysPersonas()" :key="index">{{keyName}}</th>
+          <th v-for="(keyName, index) in getKeysFromUsers" :key="index">{{keyName}}</th>
         </tr>
         <!-- Filas con los datos -->
-        <tr v-for="(persona, index) in personas" :key="index">
-          <td v-for="(i, index) in getKeysPersonas()" :key="index">{{persona[i]}}</td>
+        <tr v-for="(users, index) in $store.state.users" :key="index">
+          <td v-for="(i, index) in getKeysFromUsers" :key="index">{{users[i]}}</td>
         </tr>
       </table>
     </div>

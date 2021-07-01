@@ -1,25 +1,23 @@
-
 export default {
   name: 'src-components-formulario',
   components: {},
   props: [],
+  mixins: [],
   data () {
     return {
-      url: 'https://60adc5c380a61f0017331a4f.mockapi.io/tp4/usuarios',
       formData : this.getInitialData(),
       formState : {},
       nombreLengthMin : 3,
       nombreLengthMax : 15,
       edadMin : 18,
-      edadMax : 120,
-      personas: []
+      edadMax : 120
     }
   },
   computed: {
 
   },
   mounted () {
-
+    
   },
   methods: {
     getInitialData() {
@@ -30,23 +28,8 @@ export default {
       }
     },
     agregarPersona(persona){
-      console.log(persona);
-      this.personas.push(persona);
-      this.postUsuarioAxios(persona);
+      this.$store.dispatch('agregarUsuario', persona);
     },
-    async postUsuarioAxios(usuario){
-      try {
-        let res = await this.axios.post(this.url, usuario, {'content-type':'application/json'});
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-      
-    },
-    getKeysPersonas(){
-      return Object.keys(this.personas[0]);
-    },
-
     enviar() {
       //SPREAD Operator
       console.log({...this.formData});

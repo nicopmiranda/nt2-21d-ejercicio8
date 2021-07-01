@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container-fluid mt-3">
     <div class="jumbotron">
-      <h1>NT2 - TP6</h1>
+      <h1>NT2 - TP8</h1>
       <br>
       <NavBar />
       <router-view></router-view>
